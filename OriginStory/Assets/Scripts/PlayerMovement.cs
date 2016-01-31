@@ -19,10 +19,17 @@ public class PlayerMovement : MonoBehaviour {
 
     bool canMove = true;
 
+    void Awake() {
+        if (CheckPoint.Instance.saved) {
+            transform.position = new Vector3(100f, 18f, 0);
+        }
+    }
+
     void OnEnable() {
         EventManager.StartListening("StartRitual", StopMoving);
         EventManager.StartListening("StopRitual", StartMoving);
     }
+
     void OnDisable() {
         EventManager.StopListening("StartRitual", StopMoving);
         EventManager.StopListening("StopRitual", StartMoving);

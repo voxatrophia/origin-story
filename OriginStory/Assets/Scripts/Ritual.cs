@@ -34,9 +34,12 @@ public class Ritual : MonoBehaviour {
     Vector3 origScale;
 
     public GameObject group;
+    AudioSource music;
+    public AudioClip prayerMusic;
 
     void Awake() {
         anim = GetComponent<Animator>();
+        music = GetComponent<AudioSource>();
         prayer = new Prayer();
         prayer.Init();
     }
@@ -80,6 +83,7 @@ public class Ritual : MonoBehaviour {
     void StartPraying() {
         praying = true;
         anim.SetBool("Praying", true);
+        AudioManager.Instance.PlayPrayer();
         origScale = transform.localScale;
         Vector3 theScale = origScale;
         if (theScale.x < 0) {
@@ -92,6 +96,7 @@ public class Ritual : MonoBehaviour {
     }
 
     void StopPraying() {
+        AudioManager.Instance.StopPrayer();
         EventManager.TriggerEvent("StopRitual");
         group.SetActive(true);
         ResetPrayer();
@@ -128,25 +133,25 @@ public class Ritual : MonoBehaviour {
         }
     }
 
-    bool CheckSequence(int direction) {
-        bool ret = false;
+    //bool CheckSequence(int direction) {
+    //    bool ret = false;
 
-        if (direction == prayer.sequence[prayer.step]) {
-            prayer.step += 1;
-            ret = true;
-        }
-        else {
-            ResetSequence();
-        }
+    //    if (direction == prayer.sequence[prayer.step]) {
+    //        prayer.step += 1;
+    //        ret = true;
+    //    }
+    //    else {
+    //        ResetSequence();
+    //    }
 
-        if (prayer.step == 4) {
-            //Sequence complete
-            Health.Instance.FeelBetter();
-            ResetSequence();
-            Debug.Log("Sequence Complete");
-        }
-        return ret;
-    }
+    //    if (prayer.step == 4) {
+    //        //Sequence complete
+    //        Health.Instance.FeelBetter();
+    //        ResetSequence();
+    //        Debug.Log("Sequence Complete");
+    //    }
+    //    return ret;
+    //}
 
     void ResetSequence() {
         prayer.step = 0;

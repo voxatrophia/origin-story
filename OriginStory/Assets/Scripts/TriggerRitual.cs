@@ -18,6 +18,7 @@ public class TriggerRitual : MonoBehaviour {
             pray_script.enabled = false;
             rit_script.enabled = true;
             group.SetActive(true);
+            CheckPoint.Instance.saved = true;
         }
     }
 }

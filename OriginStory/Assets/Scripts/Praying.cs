@@ -76,6 +76,7 @@ public class Praying : MonoBehaviour {
 
     void StartPraying() {
         praying = true;
+        AudioManager.Instance.PlayPrayer();
         anim.SetBool("Praying", true);
         origScale = transform.localScale;
         Vector3 theScale = origScale;
@@ -91,6 +92,7 @@ public class Praying : MonoBehaviour {
         ResetPrayer();
         transform.localScale = origScale;
         Time.timeScale = 1;
+        AudioManager.Instance.StopPrayer();
     }
 
     void ResetPrayer() {

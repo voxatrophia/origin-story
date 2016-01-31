@@ -9,7 +9,9 @@ public class CameraMove : Singleton<CameraMove> {
     public int pos = 0;
 
     void Awake() {
-        
+        if (CheckPoint.Instance.saved) {
+            pos = 4;
+        }
     }
 
     void OnEnable() {

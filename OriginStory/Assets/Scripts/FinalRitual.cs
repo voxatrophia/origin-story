@@ -7,6 +7,9 @@ public class FinalRitual : Singleton<FinalRitual> {
     public int totalRounds;
     public float speed;
 
+    public AudioClip drum;
+    AudioSource sound;
+
     //what step in the sequence
     int step;
 
@@ -31,6 +34,7 @@ public class FinalRitual : Singleton<FinalRitual> {
     }
 
     void Awake() {
+        sound = GetComponent<AudioSource>();
 
         step = 0;
         round = 1;
@@ -41,6 +45,7 @@ public class FinalRitual : Singleton<FinalRitual> {
 
     void CheckLeft() {
         if(step == 0) {
+            sound.PlayOneShot(drum);
             step++;
             final.SetActive(false);
             final.SetActive(true);
@@ -49,6 +54,7 @@ public class FinalRitual : Singleton<FinalRitual> {
 
     void CheckRight() {
         if (step == 2) {
+            sound.PlayOneShot(drum);
             step++;
             final.SetActive(false);
             final.SetActive(true);
@@ -57,6 +63,7 @@ public class FinalRitual : Singleton<FinalRitual> {
 
     void CheckUp() {
         if (step == 1) {
+            sound.PlayOneShot(drum);
             step++;
             final.SetActive(false);
             final.SetActive(true);
@@ -65,6 +72,7 @@ public class FinalRitual : Singleton<FinalRitual> {
         if (step == 3) {
             step = 0;
             if (round < totalRounds) {
+                sound.PlayOneShot(drum);
                 round++;
                 final.SetActive(false);
                 final.SetActive(true);

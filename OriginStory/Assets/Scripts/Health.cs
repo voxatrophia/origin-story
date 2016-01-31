@@ -6,10 +6,18 @@ public class Health : Singleton<Health> {
     public float health = 50;
     public float maxHealth = 100;
 
+    public AudioClip heal;
+    AudioSource sound;
+
     public Slider healthbar;
+
+    void Awake() {
+        sound = GetComponent<AudioSource>();
+    }
 
     public void FeelBetter() {
         health = Mathf.Clamp(health + 25f, 0, 100);
+        sound.PlayOneShot(heal);
     }
 
     public void FeelWorse(float amount) {
