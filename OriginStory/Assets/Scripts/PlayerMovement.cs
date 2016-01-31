@@ -17,6 +17,17 @@ public class PlayerMovement : MonoBehaviour {
 
     Animator anim;
 
+    bool canMove = true;
+
+    void OnEnable() {
+        EventManager.StartListening("StartRitual", StopMoving);
+        EventManager.StartListening("StopRitual", StartMoving);
+    }
+    void OnDisable() {
+        EventManager.StopListening("StartRitual", StopMoving);
+        EventManager.StopListening("StopRitual", StartMoving);
+    }
+
     void Start() {
         groundCheck = transform.Find("GroundCheck");
         rb = GetComponent<Rigidbody2D>();
@@ -37,29 +48,40 @@ public class PlayerMovement : MonoBehaviour {
 
     }
     void Update() {
+        if (canMove) {
+            float move = Input.GetAxis("Horizontal");
+            rb.velocity = new Vector2(move * speed, rb.velocity.y);
+            anim.SetFloat("Speed", Mathf.Abs(move));
 
-        float move = Input.GetAxis("Horizontal");
-        rb.velocity = new Vector2(move * speed, rb.velocity.y);
-        anim.SetFloat("Speed", Mathf.Abs(move));
+            // If the input is moving the player right and the player is facing left...
+            if (move > 0 && !facingRight) {
+                // ... flip the player.
+                Flip();
+            }
+            // Otherwise if the input is moving the player left and the player is facing right...
+            else if (move < 0 && facingRight) {
+                // ... flip the player.
+                Flip();
+            }
 
-        // If the input is moving the player right and the player is facing left...
-        if (move > 0 && !facingRight) {
-            // ... flip the player.
-            Flip();
-        }
-        // Otherwise if the input is moving the player left and the player is facing right...
-        else if (move < 0 && facingRight) {
-            // ... flip the player.
-            Flip();
-        }
-
-        if (Input.GetButtonDown("Jump")) {
-            if (grounded) {
-                grounded = false;
-                anim.SetBool("Grounded", false);
-                rb.AddForce(new Vector2(0f, jumpForce));
+            if (Input.GetButtonDown("Jump")) {
+                if (grounded) {
+                    grounded = false;
+                    anim.SetBool("Grounded", false);
+                    rb.AddForce(new Vector2(0f, jumpForce));
+                }
             }
         }
+
+    }
+
+    void StopMoving() {
+        canMove = false;
+        rb.velocity = new Vector2(0,0);
+    }
+
+    void StartMoving() {
+        canMove = true;
     }
 
     private void Flip() {

@@ -11,3 +11,9 @@ public static class CameraTrigger {
     public const string Fifth = "FifthCameraTrigger";
     public const string Sixth = "SixthCameraTrigger";
 }
+
+public static class Prayers {
+    public const string PrayLeft = "PrayLeft";
+    public const string PrayRight = "PrayRight";
+    public const string PrayUp = "PrayUp";
+}
