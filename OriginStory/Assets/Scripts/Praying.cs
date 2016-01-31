@@ -53,23 +53,23 @@ public class Praying : MonoBehaviour {
 
         if (praying) {
             if (Input.GetButtonDown("Left")) {
-                ChangePrayer(0);
-            }
-            if (Input.GetButtonDown("Right")) {
-                ChangePrayer(1);
-            }
-            if (Input.GetButtonDown("Up")) {
-                ChangePrayer(2);
+                int dir = 0;
+
+                ChangePrayer(dir);
+                CheckSequence(dir);
             }
 
-            //if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            //    Debug.Log("Pressed 1");
-            //    prayFirst = true;
-            //    anim.SetBool("PrayLeft", true);
-            //}
-            //if (prayFirst && Input.GetKeyDown(KeyCode.Alpha2)) {
-            //    Debug.Log("Part 2");
-            //}
+            if (Input.GetButtonDown("Right")) {
+                int dir = 1;
+                ChangePrayer(dir);
+                CheckSequence(dir);
+            }
+
+            if (Input.GetButtonDown("Up")) {
+                int dir = 2;
+                ChangePrayer(dir);
+                CheckSequence(dir);
+            }
         }
 
     }
@@ -123,6 +123,29 @@ public class Praying : MonoBehaviour {
                 anim.SetBool("PrayRight", false);
                 break;
         }
+    }
 
+    bool CheckSequence(int direction) {
+        bool ret = false;
+
+        if (direction == prayer.sequence[prayer.step]) {
+            prayer.step += 1;
+            ret = true;
+        }
+        else {
+            ResetSequence();
+        }
+
+        if (prayer.step == 4) {
+            //Sequence complete
+            Health.Instance.FeelBetter();
+            ResetSequence();
+            Debug.Log("Sequence Complete");
+        }
+        return ret;
+    }
+
+    void ResetSequence() {
+        prayer.step = 0;
     }
 }
