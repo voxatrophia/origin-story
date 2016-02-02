@@ -23,7 +23,7 @@ public class Health : Singleton<Health> {
     public void FeelWorse(float amount) {
         health = Mathf.Clamp(health - amount, 0, 100);
         if (health == 0) {
-            Debug.Log("Died");
+            Scenes.Instance.Restart();
         }
     }
 

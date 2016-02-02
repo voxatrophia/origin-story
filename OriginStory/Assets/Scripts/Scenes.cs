@@ -10,15 +10,19 @@ public class Scenes : Singleton<Scenes> {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-
-
     public void GameOver() {
         Time.timeScale = 0;
         Debug.Log("You died");
+        Fader.Instance.FadeToBlack();
     }
 
     public void Victory() {
-        Time.timeScale = 0;
-        Debug.Log("You win");
+        Fader.Instance.FadeToBlack();
+        //        Time.timeScale = 0;
+        NextScene();
+    }
+
+    public void NextScene() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

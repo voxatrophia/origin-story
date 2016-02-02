@@ -1,32 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-    //public class Prayer {
-    //    //Left = 0
-    //    //Right = 1
-    //    //Up = 2
-    //    public int[] sequence;
-
-    //    public int step { get; set; }
-
-    //    public bool first { get; set; }
-    //    public bool second { get; set; }
-    //    public bool third { get; set; }
-    //    public bool fourth { get; set; }
-
-    //    public void Init() {
-    //        step = 0;
-
-    //        sequence = new int[4];
-    //        sequence[0] = 0; //Left
-    //        sequence[1] = 2; //Up
-    //        sequence[2] = 1; //Right
-    //        sequence[3] = 2; //Up
-
-    //    }
-    //}
-
 public class Ritual : MonoBehaviour {
     public bool praying;
     Prayer prayer;
@@ -34,12 +8,9 @@ public class Ritual : MonoBehaviour {
     Vector3 origScale;
 
     public GameObject group;
-    AudioSource music;
-    public AudioClip prayerMusic;
 
     void Awake() {
         anim = GetComponent<Animator>();
-        music = GetComponent<AudioSource>();
         prayer = new Prayer();
         prayer.Init();
     }
@@ -132,26 +103,6 @@ public class Ritual : MonoBehaviour {
                 break;
         }
     }
-
-    //bool CheckSequence(int direction) {
-    //    bool ret = false;
-
-    //    if (direction == prayer.sequence[prayer.step]) {
-    //        prayer.step += 1;
-    //        ret = true;
-    //    }
-    //    else {
-    //        ResetSequence();
-    //    }
-
-    //    if (prayer.step == 4) {
-    //        //Sequence complete
-    //        Health.Instance.FeelBetter();
-    //        ResetSequence();
-    //        Debug.Log("Sequence Complete");
-    //    }
-    //    return ret;
-    //}
 
     void ResetSequence() {
         prayer.step = 0;

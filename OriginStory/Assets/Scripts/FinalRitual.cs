@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class FinalRitual : Singleton<FinalRitual> {
@@ -8,7 +9,10 @@ public class FinalRitual : Singleton<FinalRitual> {
     public float speed;
 
     public AudioClip drum;
+    public AudioClip bell;
     AudioSource sound;
+
+    public Image black;
 
     //what step in the sequence
     int step;
@@ -35,7 +39,7 @@ public class FinalRitual : Singleton<FinalRitual> {
 
     void Awake() {
         sound = GetComponent<AudioSource>();
-
+        black.gameObject.SetActive(false);
         step = 0;
         round = 1;
 
@@ -78,9 +82,13 @@ public class FinalRitual : Singleton<FinalRitual> {
                 final.SetActive(true);
             }
             else {
+                sound.PlayOneShot(bell);
                 final.SetActive(false);
-                EventManager.TriggerEvent("GameOver");
-                Debug.Log("Game Over. You win.");
+                EventManager.TriggerEvent("Victory");
+                CheckPoint.Instance.saved = false;
+                Invoke("EndGame", 2.5f);
+                Fader.Instance.FadeToBlack();
+                Invoke("BlackOut", 1.5f);
             }
         }
     }
@@ -100,6 +108,14 @@ public class FinalRitual : Singleton<FinalRitual> {
 
     public int GetStep() {
         return step;
+    }
+
+    void BlackOut() {
+        black.gameObject.SetActive(true);
+    }
+
+    void EndGame() {
+        Scenes.Instance.Victory();
     }
 
 }
